@@ -132,7 +132,7 @@ function MethodTest() {
       is_dry_run: true,
     };
     console.log({ tari: window.tari });
-    const res = await window.tari?.submitInstruction(req);
+    const res = await window.tari?.submitTransaction(req);
     console.log({ res });
     setTransactionResult(res);
   }
