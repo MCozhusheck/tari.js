@@ -5,12 +5,27 @@ import Header from "./Header";
 import { TransactionSubmitRequest } from "@tariproject/wallet_jrpc_client";
 
 export default function App() {
+  React.useEffect(() => {
+    const handleMessage = async (event) => {
+      const result = await window.tari[event.method](event.params);
+      console.log(result);
+      event.source.postMessage({ id: event.id, result }, event.origin);
+      //  }
+    };
+
+    window.addEventListener("message", handleMessage, false);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
   return (
     <div>
       <Header></Header>
       <Divider></Divider>
       <Container maxWidth="sm" sx={{ mt: 6 }}>
         <Stack direction="column" spacing={2}>
+          <iframe src="http://localhost:5174/" width="100%" height="500"></iframe>
           <AccountTest></AccountTest>
           <SubstateTest></SubstateTest>
           <MethodTest></MethodTest>
